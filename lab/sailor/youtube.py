@@ -21,8 +21,8 @@ class Youtube():
         el = driver.find_element( "name", "search_query" )
         
         for idx, obj in enumerate( resources ):
-            print( "processing", idx )
-            pack = dict( uuid = obj[ 'id' ], response = [] )
+            print( "processing", idx, obj.name )
+            pack = dict( uuid = obj[ 'id' ], name = obj.name, response = [] )
             el.click() #for focus
             self.sleep()
             el.send_keys(obj['name'] + " " )
@@ -31,12 +31,11 @@ class Youtube():
                 soup = BeautifulSoup( row.get_attribute("innerHTML" ) , 'html.parser',from_encoding='cp949' )                
                 for n in soup.select( ".sbqs_c" ):
                     pack[ 'response' ].append( n.text )
-                    print( 'append', n.text )
 
             resp['data'].append( pack )
             el.clear()
             self.sleep()
 
         with open( os.path.join( "/".join(os.path.realpath( __file__ ).split( "/")[: -1]), 'output', 'related_search_terms_{}.json'.format(prefix) ), 'w', encoding = 'UTF-8' ) as f:
-            json.dump( resp, f, ensure_ascii = False )
+            json.dump( resp, f, ensure_ascii = False, indent =4 )
 
