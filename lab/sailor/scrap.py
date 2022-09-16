@@ -22,27 +22,21 @@ class Scrap():
         pass
 
     def youtube_related_search_terms( self ):
+        print( str(333) )
         path = os.path.join( "/".join(os.path.realpath( __file__ ).split( "/")[: -1]))
         tot = 0
+        disk = []
         with open( os.path.join( path, 'resources', 'test.tsv' ), 'r', newline ='' ) as f:
             nset = [ x for x in csv.reader(f, delimiter='\t', quotechar='|') ]
             for row in nset[ 1: ]:
                 #print(', '.join(row))
                 game_id = row[ 1 ]
                 game_name = row[ 2 ]
-
-                if( row[ 3 ]) == '3차 작업 대상':
-                    
-                    tot += 1
+                disk.append( dict( id = game_id, name = game_name ))
         
+        indexing = 0
         
-
-
-        # test = [ dict( id = "game_id", name = "엘든링"),
-        #     dict( id = "game_id", name = "대항해시대2" )]
-        # Youtube().related_search_terms( driver = self.driver, resources = test, prefix = '1' )
-        pass
-
+        Youtube().related_search_terms( driver = self.driver, resources = disk[ indexing * 100: 100* (indexing + 1) ], prefix = str( indexing ) )
 
 
 

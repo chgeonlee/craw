@@ -21,6 +21,7 @@ class Youtube():
         el = driver.find_element( "name", "search_query" )
         
         for idx, obj in enumerate( resources ):
+            print( "processing", idx )
             pack = dict( uuid = obj[ 'id' ], response = [] )
             el.click() #for focus
             self.sleep()
